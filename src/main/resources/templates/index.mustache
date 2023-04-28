@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+{{> head}}
+
+<body>
+<div class="container">
+<div class="jumbotron">
+
+    <h1>Google? Bing? Test our new search engine!</h1>
+
+    <form id="searchform" method="POST" action="/">
+        <div class="form-group">
+        <label for="search">Keywords to search</label><br>
+        <input class="form-control" type="text" id="search" name="search" value="{{search}}"><br>
+        </div>
+        <div class="form-group">
+            <label for="text">Text to search in:</label><br>
+            <textarea class="form-control" type="text" id="text" name="text">{{text}}</textarea><br>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Check</button>
+    </form>
+
+    <div class="user-list">
+        <h3>Past searches: </h3>
+        {{#historic}}
+            <div class="result">
+                {{.}}
+            </div>
+        {{/historic}}
+    </div>
+
+    <script>
+        $('#searchform').submit(function(event) {
+            var obj = $('#searchform').serializeJSON();
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: {serializedJSON: JSON.stringify(obj)},
+                success: function (response) {
+                    console.log(response);
+                    location.reload();
+                }
+            });
+            event.preventDefault();
+        });
+    </script>
+
+
+</div>
+</div>
+</body>
+
+</html>

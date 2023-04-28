@@ -1,0 +1,23 @@
+# Automate deployment
+version: '3'
+services:
+  vulnerable:
+    build: .
+    ports:
+      - 8080:8080
+    restart: always
+    environment:
+      CHALLENGE_FLAG: "URJC{replace_with_real_flag}"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://db:3306/db?useSSL=false&allowPublicKeyRetrieval=true"
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - db
+  db:
+    image: mysql:5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
